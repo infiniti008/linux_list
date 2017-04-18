@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <style media="screen">
+            #div_button{
+                background: PeachPuff;
+                margin-left: 40%;
+                text-align: center;
+                padding: 15px;
+                width: 200px;
+                height: auto;
+                margin-top: 20px;
+                border: 5px solid SteelBlue; 
+            }
+            a{
+                border-radius: 10px;
+                background: Salmon;
+                margin-top: 10px;
+                display: inline-table;
+                margin-left: auto;
+                padding: 6px;
+                font-family: monospace;
+                text-decoration: none;
+                font-size: 25px;
+                border: 5px solid Teal;
+            }
+            a:hover{
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        	    border: 5px solid PaleVioletRed;
+            }
+        </style>
+        <div id="block">
+            <div id="div_button">
+                <a href = "http://{{ip}}:8000">CloudCMD</a>
+                <a href = "http://{{ip}}:9091">Transmission</a>
+                <a href = "/video">Get video</a>
+        	</div>
+    	</div>
+    </body>
+</html>
