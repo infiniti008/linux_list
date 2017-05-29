@@ -4,8 +4,10 @@ var fs = require('fs');
 var path = require('path');
 var tel = require('./tel/index.js');
 var ipi = require('./ip/index.js');
+var config = require('./config.json');
 
-var path_to_media = '/home/android/sda/load';
+var path_plc = config.plc_path;
+var path_to_media = config.load_path;
 var ip_default = '192.168.1.28';
 var ip = {};
 var vlog = 7;
@@ -15,11 +17,11 @@ tel.start_bot('das');
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
-app.use('/source', express.static('/home/android/list/so'));
-app.use('/load', express.static('/home/android/sda/load'));
-app.use('/plc', express.static('/home/android/sda/plc'));
-app.listen(3000, function () {
-  console.log('Server run on port 3000');
+app.use('/source', express.static('/home/android/linux_list/so'));
+app.use('/load', express.static('/home/android/sd/img_load/load'));
+app.use('/plc', express.static('/home/android/sd/img_load/plc'));
+app.listen(config.port, function () {
+  console.log('Server run on port ' + config.port);
 });
 app.get('/',function (req, res) {
     var from_ip = req.connection.remoteAddress.substring(req.connection.remoteAddress.indexOf('1'), req.connection.remoteAddress.lastIndexOf('.'));
@@ -66,7 +68,7 @@ app.get('/video',function (req, res) {
 
 function create_pl(from_ip, nam){
     var text = '#EXTM3U\n#EXTINF:0,' + nam.substring(22, nam.length) + '\nhttp://' + (ip[from_ip] || ip_default) + ':3000/load' + nam.substring((nam.indexOf('load') + 4), nam.length);
-    var path = '/home/android/sda/plc/' + nam.substring((nam.lastIndexOf('/') + 1), (nam.length - 4)) + '.m3u';
+    var path = path_plc + nam.substring((nam.lastIndexOf('/') + 1), (nam.length - 4)) + '.m3u';
     fs.writeFileSync(path, text);
     var plc_path = 'http://' + (ip[from_ip] || ip_default) + ':3000/plc/' + nam.substring((nam.lastIndexOf('/') + 1), (nam.length - 4)) + '.m3u';
     return(plc_path);

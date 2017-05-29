@@ -1,3 +1,4 @@
+var config = require('../config.json');
 var TelegramBot = require('node-telegram-bot-api');
 var fs = require('fs');
 const download = require('download');
@@ -14,9 +15,9 @@ var in_load = false; //Для определения что уже есть те
 var linc = {};
 var add_torr = {};
 var add_li = {};
-var path_to_save = '/home/android/sda/load/';
+var path_to_save = config.load_path + '/';
 
-var token = '268377689:AAEehpljdqiY6qITewLNPUkbe60Kbszl95w';
+var token = config.tocken;
 function start_bot(){
     var bot = new TelegramBot(token, { polling: true });
     console.log('We start telegramm bot!');
