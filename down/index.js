@@ -12,6 +12,10 @@ function start_load(func, link, chatId){
     var rash = link.substring(link.lastIndexOf('.'), link.length);
     var output = config.load_path + '/' + file_name + rash;
     var download = wget.download(link, output, options);
+    download.on('error', function(err) {
+        func.ero(`Нам не удалось загрузить файл\nВот сообщение об ошибке: ${err}`);
+        // console.log(err);
+    });
     download.on('start', function(fileSize) {
         // console.log(fileSize);
         func.start(`Мы начали загружать твой файл с именем: ${file_name + rash}\nРазмер файла: ${(fileSize/1024)/1024} Mb`);
