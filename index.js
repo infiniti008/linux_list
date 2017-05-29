@@ -1,4 +1,3 @@
-//sdfsfdfg
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
@@ -6,11 +5,11 @@ var tel = require('./tel/index.js');
 var ipi = require('./ip/index.js');
 var config = require('./config.json');
 
-var path_plc = config.plc_path;
+var path_plc = config.plc_path + '/';
 var path_to_media = config.load_path;
 var ip_default = '192.168.1.28';
 var ip = {};
-var vlog = 7;
+var vlog = 10;
 var s = ['avi', 'mkv', 'flv', 'm4v', 'mkv', 'mov', 'mp4', 'mpg', 'peg', '.ts', 'wmv', 'ebm'];
 
 tel.start_bot('das');
@@ -67,7 +66,7 @@ app.get('/video',function (req, res) {
 });
 
 function create_pl(from_ip, nam){
-    var text = '#EXTM3U\n#EXTINF:0,' + nam.substring(22, nam.length) + '\nhttp://' + (ip[from_ip] || ip_default) + ':3000/load' + nam.substring((nam.indexOf('load') + 4), nam.length);
+    var text = '#EXTM3U\n#EXTINF:0,' + nam.substring(22, nam.length) + '\nhttp://' + (ip[from_ip] || ip_default) + ':3000' + nam.substring((nam.indexOf('load') + 4), nam.length);
     var path = path_plc + nam.substring((nam.lastIndexOf('/') + 1), (nam.length - 4)) + '.m3u';
     fs.writeFileSync(path, text);
     var plc_path = 'http://' + (ip[from_ip] || ip_default) + ':3000/plc/' + nam.substring((nam.lastIndexOf('/') + 1), (nam.length - 4)) + '.m3u';
