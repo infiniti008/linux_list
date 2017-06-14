@@ -35,7 +35,7 @@ function start_load(func, link, chatId){
 }
 
 function start_load_as(func, link, chatId, name){
-    var file_name = link.substring((link.lastIndexOf('/') + 1), (link.lastIndexOf('.') - 1));
+    var file_name = name;
     var rash = link.substring(link.lastIndexOf('.'), link.length);
     var output = config.load_path + '/' + name;
     var download = wget.download(link, output, options);
