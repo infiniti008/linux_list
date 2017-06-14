@@ -8,7 +8,8 @@ var command = {
     '/echo':' - Команда ЭХО.',
     '/help':' - Справка о доступных командах.',
     '/add_torrent':' - Функция добавления торрент файла для закачки.',
-    '/add_link':' - Функция загрузки файла по прямой ссылке.'
+    '/add_link':' - Функция загрузки файла по прямой ссылке.',
+    '/save_as':' - Функция Загрузки файла с указанием имени.'
 };
 
 var in_load = false; //Для определения что уже есть текущая загрузка
@@ -16,6 +17,7 @@ var linc = {};
 var add_torr = {};
 var add_li = {};
 var path_to_save = config.load_path + '/';
+var save_name = '';
 
 var token = config.tocken;
 function start_bot(){
@@ -28,6 +30,12 @@ function start_bot(){
         bot.sendMessage(chatId, resp);
     });
     
+    bot.onText(/\/save_as (.+) (.+)/, function (msg, match){
+    console.log(match[1]);
+    console.log(match[2]);
+    save_name = match[1];
+    });
+
     bot.onText(/\/help/, function (msg, match) {
         var help = 'Я умею выполнять следующие команды: \n';
         for(var j in command){
@@ -62,6 +70,10 @@ function start_bot(){
         var chatId = msg.chat.id;
         console.log(msg);
         // console.log(add_torr[chatId]);
+	if(save_name.length >= 2){
+		console.log('sdkjnjnkjnkjnkj2n23kjn3kjn');
+		save_name = '';
+	}
         if(msg.document){
             if(add_torr[chatId] == 1 && msg.document.file_name.substring((msg.document.file_name.length - 8), msg.document.file_name.length) == '.torrent'){
                 bot.sendMessage(chatId, 'Мы добавили ваш торрент файл в текущие загрузки.');
