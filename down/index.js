@@ -34,6 +34,34 @@ function start_load(func, link, chatId){
     });
 }
 
+function start_load_as(func, link, chatId, name){
+    var file_name = link.substring((link.lastIndexOf('/') + 1), (link.lastIndexOf('.') - 1));
+    var rash = link.substring(link.lastIndexOf('.'), link.length);
+    var output = config.load_path + '/' + name;
+    var download = wget.download(link, output, options);
+    download.on('error', function(err) {
+        func.ero(`Нам не удалось загрузить файл\nВот сообщение об ошибке: ${err}`);
+        // console.log(err);
+    });
+    download.on('start', function(fileSize) {
+        // console.log(fileSize);
+        func.start(`Мы начали загружать твой файл с именем: ${file_name + rash}\nРазмер файла: ${(fileSize/1024)/1024} Mb`);
+    });
+    download.on('end', function(output) {
+        // console.log(output);
+        func.stop('100 %!\nПроцесс загрузки завершен! Теперь вы можете начать новую загрузку!');
+    });
+    download.on('progress', function(progress) {
+        // code to show progress bar
+        if(in_progress(progress) == true){
+            var pr = progress.toString().substring(2, 4) + '%';
+            // console.log(pr);
+            func.progress(pr);
+        }
+    });
+}
+
+
 
 function in_progress(procent){
     if(procent >= 0.005 && procent <= 0.05 && pocaz == 0){
@@ -95,6 +123,7 @@ function in_progress(procent){
     
 }
 module.exports = {
-    start_load : start_load
+    start_load : start_load,
+    start_load_as : start_load_as
 }
 
