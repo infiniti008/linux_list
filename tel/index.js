@@ -31,9 +31,39 @@ function start_bot(){
     });
     
     bot.onText(/\/save_as (.+) (.+)/, function (msg, match){
-    console.log(match[1]);
-    console.log(match[2]);
-    save_name = match[1];
+    	var chatId = msg.chat.id;
+   	save_name = match[1];
+	    if (in_load == false){
+                    bot.sendMessage(chatId, 'Мы получили вашу ссылку, начинаем загрузку файла!');
+                    // console.log('12232342342354354');
+                    linc[chatId] = match[2];
+                    var mult = {
+                        start : function(text){
+                            in_load = true;
+                            console.log(text);
+                            bot.sendMessage(chatId, text);
+                        },
+                        stop : function(text){
+                            in_load = false;
+                            console.log(text);
+                            bot.sendMessage(chatId, text);
+                        },
+                        progress : function(text){
+                            in_load = true;
+                            console.log(text);
+                            bot.sendMessage(chatId, text);
+                        },
+                        ero : function(text){
+                            in_load = false;
+                            console.log(text);
+                            bot.sendMessage(chatId, text);
+                        }
+                    }
+                    down.start_load_as(mult, linc[chatId], chatId, save_name);
+                }
+                else{
+                    bot.sendMessage(chatId, 'Идет загрузка другого файла, попробуйте позже!');
+                }
     });
 
     bot.onText(/\/help/, function (msg, match) {
