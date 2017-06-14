@@ -18,7 +18,7 @@ function start_load(func, link, chatId){
     });
     download.on('start', function(fileSize) {
         // console.log(fileSize);
-        func.start(`Мы начали загружать твой файл с именем: ${file_name + rash}\nРазмер файла: ${(fileSize/1024)/1024} Mb`);
+        func.start(`Мы начали загружать твой файл с именем: ${file_name}\nРазмер файла: ${(fileSize/1024)/1024} Mb`);
     });
     download.on('end', function(output) {
         // console.log(output);

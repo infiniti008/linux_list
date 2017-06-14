@@ -1,0 +1,11 @@
+#!/bin/sh
+case $1 in
+	start)
+	echo "git webui available at: localhost:3003"
+		screen -dmS weblearn git webui --repo-root /home/android/work/linux_list --port 3003
+	;;
+	stop)
+	echo "now git webui isn't available"
+		 screen -X -S weblearn quit
+	;;
+esac
